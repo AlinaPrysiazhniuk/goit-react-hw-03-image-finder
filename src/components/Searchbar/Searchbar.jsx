@@ -1,6 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
-import { toast } from 'react-toastify';
+import propTypes from 'prop-types';
+//import { toast } from 'react-toastify';
 
 export class Searchbar extends Component {
   state = {
@@ -15,16 +16,7 @@ export class Searchbar extends Component {
     event.preventDefault();
 
     if (this.state.imageName.trim() === '') {
-      return toast('🦄 Wow so easy!', {
-        position: 'top-left',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: 'light',
-      });
+      return alert('Enter');
     }
 
     this.props.onSubmit(this.state.imageName);
@@ -45,8 +37,8 @@ export class Searchbar extends Component {
             name="imageName"
             value={this.state.imageName}
             onChange={this.handleNameChange}
-            // autocomplete="off"
-            // autofocus
+            autocomplete="off"
+            autofocus
             placeholder="Search images and photos"
           />
         </form>
@@ -54,3 +46,7 @@ export class Searchbar extends Component {
     );
   }
 }
+
+Searchbar.propTypes = {
+  onSubmit: propTypes.func,
+};

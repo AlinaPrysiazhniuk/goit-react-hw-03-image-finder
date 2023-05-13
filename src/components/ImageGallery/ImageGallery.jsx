@@ -1,5 +1,5 @@
-import React from 'react';
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import propTypes from 'prop-types';
 
 export const ImageGallery = ({ images, openModal }) => {
   <ul class="gallery">
@@ -13,4 +13,13 @@ export const ImageGallery = ({ images, openModal }) => {
       />
     ))}
   </ul>;
+};
+
+ImageGallery.propTypes = {
+  images: propTypes.array,
+  id: propTypes.number,
+  webformatURL: propTypes.string,
+  tags: propTypes.string,
+  largeImageURL: propTypes.string,
+  openModal: propTypes.func,
 };

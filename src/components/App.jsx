@@ -1,36 +1,98 @@
 import { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 
-import { ToastContainer } from 'react-toastify';
-import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
+//import { ToastContainer } from 'react-toastify';
+
+import { fetchImages } from './SearchImage/SearchImage';
+import { ImageGallery } from './ImageGallery/ImageGallery';
+import { Button } from './Button/Button';
+import { Modal } from './Modal/Modal';
+import { Loader } from './Loader/Loader';
 
 export class App extends Component {
   state = {
     imageName: '',
-    // loading: false,
+    images: [],
+    page: 1,
+    per_page: 12,
+    loading: false,
+    loadMore: false,
+    error: null,
+    showModal: false,
+    largeImageURL: 'largeImageURL',
+    id: null,
   };
 
-  // componentDidMount() {
-  //   this.setState({ loading: true });
-  //   fetch(
-  //     'https://pixabay.com/api/?q=cat&page=1&key=34983998-155dfb76bac09cdf48f99cd2f&image_type=photo&orientation=horizontal&per_page=12'
-  //   )
-  //     .then(res => res.json())
-  //     .then(image => this.setState({ image }))
-  //     .finally(image => this.setState({ loading: false }));
-  // }
+  componentDidUpdate(_, prevState) {
+    const { imageName, page } = this.state;
+    if (prevState.imageName !== imageName || prevState.page !== page) {
+      this.getImages(imageName, page);
+    }
+  }
+
+  getImages = async (imageName, page) => {
+    this.setState({ loading: true });
+    if (!imageName) {
+      return;
+    }
+    try {
+      const { hits, totalHits } = await fetchImages(imageName, page);
+      this.setState(prevState => ({
+        images: [...prevState.images, ...hits],
+        loadMore: this.state.page < Math.ceil(totalHits / this.state.per_page),
+      }));
+    } catch (error) {
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ loading: false });
+    }
+  };
 
   handleFormSubmit = imageName => {
-    this.setState({ imageName });
+    this.setState({
+      imageName,
+      images: [],
+      page: 1,
+      loadMore: false,
+    });
+  };
+
+  onLoadMore = () => {
+    this.setState(prevState => ({ page: prevState.page + 1 }));
+  };
+
+  openModal = largeImageURL => {
+    this.setState({
+      showModal: true,
+      largeImageURL: largeImageURL,
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      showModal: false,
+    });
   };
 
   render() {
+    const { images, loading, loadMore, page, showModal, largeImageURL } =
+      this.state;
     return (
       <div>
-        sasas
         <Searchbar onSubmit={this.handleFormSubmit} />
-        <ImageGalleryItem imageName={this.state.imageName} />
-        <ToastContainer
+        {loading ? (
+          <Loader />
+        ) : (
+          <ImageGallery images={images} openModal={this.openModal} />
+        )}
+
+        {loadMore && <Button onLoadMore={this.onLoadMore} page={page} />}
+
+        {showModal && (
+          <Modal largeImageURL={largeImageURL} onClose={this.closeModal} />
+        )}
+
+        {/* <ToastContainer
           position="top-left"
           autoClose={5000}
           hideProgressBar={false}
@@ -41,7 +103,7 @@ export class App extends Component {
           draggable
           pauseOnHover
           theme="light"
-        />
+        /> */}
         {/* {this.state.loading && <h1>Loading...</h1>} */}
         {/* {this.state.image && <div>{this.state.image}</div>} */}
       </div>
