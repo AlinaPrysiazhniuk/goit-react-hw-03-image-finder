@@ -1,19 +1,34 @@
 import { Component } from 'react';
+import { Searchbar } from './Searchbar/Searchbar';
 
 export class App extends Component {
   state = {
-    image: null,
+    imageName: '',
+    // loading: false,
   };
 
-  componentDidMount() {
-    fetch(
-      'https://pixabay.com/api/?q=cat&page=1&key=34983998-155dfb76bac09cdf48f99cd2f&image_type=photo&orientation=horizontal&per_page=12'
-    )
-      .then(res => res.json())
-      .then(image => this.setState({ image }));
-  }
+  // componentDidMount() {
+  //   this.setState({ loading: true });
+  //   fetch(
+  //     'https://pixabay.com/api/?q=cat&page=1&key=34983998-155dfb76bac09cdf48f99cd2f&image_type=photo&orientation=horizontal&per_page=12'
+  //   )
+  //     .then(res => res.json())
+  //     .then(image => this.setState({ image }))
+  //     .finally(image => this.setState({ loading: false }));
+  // }
+
+  handleFormSubmit = imageName => {
+    this.setState({ imageName });
+  };
 
   render() {
-    return <div>sasas</div>;
+    return (
+      <div>
+        sasas
+        <Searchbar onSubmit={this.handleFormSubmit} />
+        {/* {this.state.loading && <h1>Loading...</h1>} */}
+        {/* {this.state.image && <div>{this.state.image}</div>} */}
+      </div>
+    );
   }
 }
