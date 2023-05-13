@@ -4,7 +4,7 @@ import { Searchbar } from './Searchbar/Searchbar';
 //import { ToastContainer } from 'react-toastify';
 
 import { fetchImages } from './SearchImage/SearchImage';
-import { ImageGallery } from './ImageGallery/ImageGallery';
+import ImageGallery from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
 import { Loader } from './Loader/Loader';
@@ -23,20 +23,20 @@ export class App extends Component {
     id: null,
   };
 
-  componentDidUpdate(_, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const { imageName, page } = this.state;
     if (prevState.imageName !== imageName || prevState.page !== page) {
       this.getImages(imageName, page);
     }
   }
 
-  getImages = async (imageName, page) => {
+  getImages = async (im, page) => {
     this.setState({ loading: true });
-    if (!imageName) {
+    if (!im) {
       return;
     }
     try {
-      const { hits, totalHits } = await fetchImages(imageName, page);
+      const { hits, totalHits } = await fetchImages(im, page);
       this.setState(prevState => ({
         images: [...prevState.images, ...hits],
         loadMore: this.state.page < Math.ceil(totalHits / this.state.per_page),
@@ -78,7 +78,7 @@ export class App extends Component {
     const { images, loading, loadMore, page, showModal, largeImageURL } =
       this.state;
     return (
-      <div>
+      <>
         <Searchbar onSubmit={this.handleFormSubmit} />
         {loading ? (
           <Loader />
@@ -91,22 +91,7 @@ export class App extends Component {
         {showModal && (
           <Modal largeImageURL={largeImageURL} onClose={this.closeModal} />
         )}
-
-        {/* <ToastContainer
-          position="top-left"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-        /> */}
-        {/* {this.state.loading && <h1>Loading...</h1>} */}
-        {/* {this.state.image && <div>{this.state.image}</div>} */}
-      </div>
+      </>
     );
   }
 }
