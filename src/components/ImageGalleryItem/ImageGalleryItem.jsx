@@ -1,9 +1,9 @@
-import React from 'react';
-
-export const ImageGalleryItem = ({ image }) => {
+export const ImageGalleryItem = ({ src, alt, largeImageURL, openModal }) => {
   return (
     <li class="gallery-item">
-      <img src="" alt="" />
+      {' '}
+      onClick={() => openModal(largeImageURL)}
+      <img src={src} alt={alt} />
     </li>
   );
 };

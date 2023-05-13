@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 
 import { ToastContainer } from 'react-toastify';
+import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 
 export class App extends Component {
   state = {
@@ -28,6 +29,7 @@ export class App extends Component {
       <div>
         sasas
         <Searchbar onSubmit={this.handleFormSubmit} />
+        <ImageGalleryItem imageName={this.state.imageName} />
         <ToastContainer
           position="top-left"
           autoClose={5000}
