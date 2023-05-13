@@ -1,11 +1,12 @@
 import propTypes from 'prop-types';
+import css from './ImageGalleryItem.module.css';
 
 export const ImageGalleryItem = ({ src, alt, largeImageURL, openModal }) => {
   return (
-    <li class="gallery-item">
+    <li className={css.gallery_item}>
       {' '}
       onClick={() => openModal(largeImageURL)}
-      <img src={src} alt={alt} />
+      <img src={src} alt={alt} className={css.item_image} />
     </li>
   );
 };
