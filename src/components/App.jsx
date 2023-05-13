@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 
+import { ToastContainer } from 'react-toastify';
+
 export class App extends Component {
   state = {
     imageName: '',
@@ -26,6 +28,18 @@ export class App extends Component {
       <div>
         sasas
         <Searchbar onSubmit={this.handleFormSubmit} />
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
         {/* {this.state.loading && <h1>Loading...</h1>} */}
         {/* {this.state.image && <div>{this.state.image}</div>} */}
       </div>
