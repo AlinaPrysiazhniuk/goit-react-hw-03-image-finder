@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
-
-//import { ToastContainer } from 'react-toastify';
-
 import { fetchImages } from './SearchImage/SearchImage';
 import ImageGallery from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
@@ -72,7 +69,6 @@ export class App extends Component {
   };
 
   openModal = largeImageURL => {
-    console.log(largeImageURL);
     this.setState({
       showModal: true,
       largeImageURL: largeImageURL,
