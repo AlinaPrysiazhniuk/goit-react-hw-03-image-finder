@@ -3,7 +3,6 @@ import { Component } from 'react';
 import propTypes from 'prop-types';
 import css from './Searchbar.module.css';
 import { FiSearch } from 'react-icons/fi';
-//import { toast } from 'react-toastify';
 
 export class Searchbar extends Component {
   state = {
@@ -18,7 +17,7 @@ export class Searchbar extends Component {
     event.preventDefault();
 
     if (this.state.imageName.trim() === '') {
-      return alert('Enter');
+      return alert('Enter data for search');
     }
 
     this.props.onSubmit(this.state.imageName);
@@ -31,7 +30,7 @@ export class Searchbar extends Component {
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.search_button}>
             <span>
-              <FiSearch size={25} stroke="#3f51b5" />
+              <FiSearch size={24} stroke="#3f51b5" />
             </span>
           </button>
 
