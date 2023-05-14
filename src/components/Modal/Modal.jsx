@@ -27,11 +27,15 @@ export class Modal extends Component {
   };
 
   render() {
-    //const { tags, largeImageURL } = this.props;
     return createPortal(
       <div className={css.overlay} onClick={this.handleBackDropClick}>
         <div className={css.modal}>
-          <img src={this.props.largeImageURL} alt="" />
+          <img
+            src={this.props.largeImageURL}
+            alt=""
+            width={1100}
+            height={800}
+          />
         </div>
       </div>,
       modalRoot

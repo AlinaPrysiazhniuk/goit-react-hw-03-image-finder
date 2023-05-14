@@ -8,6 +8,7 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import { Button } from './Button/Button';
 import { Modal } from './Modal/Modal';
 import { Loader } from './Loader/Loader';
+import { animateScroll } from 'react-scroll';
 
 export class App extends Component {
   state = {
@@ -59,6 +60,15 @@ export class App extends Component {
 
   onLoadMore = () => {
     this.setState(prevState => ({ page: prevState.page + 1 }));
+    this.scrollOnMoreButton();
+  };
+
+  scrollOnMoreButton = () => {
+    animateScroll.scrollToBottom({
+      duration: 1000,
+      delay: 10,
+      smooth: 'linear',
+    });
   };
 
   openModal = largeImageURL => {
