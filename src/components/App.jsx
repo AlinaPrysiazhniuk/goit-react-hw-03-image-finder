@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { Searchbar } from './Searchbar/Searchbar';
 
 //import { ToastContainer } from 'react-toastify';
@@ -62,6 +62,7 @@ export class App extends Component {
   };
 
   openModal = largeImageURL => {
+    console.log(largeImageURL);
     this.setState({
       showModal: true,
       largeImageURL: largeImageURL,
@@ -80,6 +81,7 @@ export class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.handleFormSubmit} />
+
         {loading ? (
           <Loader />
         ) : (
